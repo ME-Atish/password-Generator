@@ -73,7 +73,7 @@ app.get("/api/test", async (req, res) => {
   res.send("ok");
   const main_generator = async (alphabet, numbers, specialSign) => {
     let randomNumber = numbers[randomIndex]
-    
+    let specialSign = specialSign[randomIndex]
   };
   main_generator(alphabets, numbers, specialSign);
 });
