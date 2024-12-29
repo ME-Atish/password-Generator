@@ -1,3 +1,7 @@
+const express = require("express");
+const app = express();
+const PORT = 3006;
+
 const alphabets = [
   {
     bigCall: [
@@ -79,9 +83,14 @@ const specialSign = [
   "?",
 ];
 let password = null;
-
-const main_generator = async (alphabet, numbers, specialSign) => {
+app.get("/", (req, res) => {
+  const main_generator = async (alphabet, numbers, specialSign) => {
     let findIndex = numbers.findIndex((num) => {
-        num == randomNumber
-    })
-};
+      num == randomNumber;
+    });
+  };
+});
+
+app.listen(PORT || 3006, () => {
+  console.log(`sample app running at port ${PORT}`);
+});
