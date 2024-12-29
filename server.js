@@ -65,7 +65,7 @@ const alphabets = [
   },
 ];
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
-const randomNumber = Math.floor(Math.random() * 10);
+const randomNumber = Math.floor(Math.random() * 10).toString();
 const specialSign = [
   "!",
   "@",
@@ -83,7 +83,9 @@ const specialSign = [
   "?",
 ];
 let password = null;
-app.get("/", (req, res) => {
+
+app.get("/api/test", async (req, res) => {
+  res.send("ok");
   const main_generator = async (alphabet, numbers, specialSign) => {
     let findIndex = numbers.findIndex((num) => {
       num == randomNumber;
