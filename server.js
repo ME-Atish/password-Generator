@@ -62,3 +62,19 @@ const alphabets = [
 ];
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 const randomNumber = Math.floor(Math.random() * 10);
+const specialSign = [
+  "!",
+  "@",
+  "#",
+  "$",
+  "%",
+  "^",
+  "*",
+  "&",
+  "_",
+  "-",
+  "/",
+  ".",
+  "|",
+  "?",
+];
