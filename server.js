@@ -70,14 +70,13 @@ let password = null;
 const randomIndex = Math.floor(Math.abs(Math.random() * 10)).toString();
 const randomIndexAlphabets = Math.floor(Math.abs(Math.random() * 26));
 
-app.get("/api/test", async (req, res) => {
-  res.send("ok");
-  const main_generator = async (alphabet, numbers, specialSign) => {
-    let randomNumber = numbers[randomIndex];
-    let randomSpecialSign = specialSign[randomIndex];
-  };
-  main_generator(alphabets, numbers, specialSign);
-});
+const main_generator = async (alphabets, numbers, specialSign) => {
+  let randomNumber = numbers[randomIndex];
+  let randomSpecialSign = specialSign[randomIndex];
+  let randomSmallAlphabets =
+    alphabets.bigCharacters.bigChar[randomIndexAlphabets];
+};
+main_generator(alphabets, numbers, specialSign);
 
 app.listen(PORT || 3006, () => {
   console.log(`sample app running at port ${PORT}`);
