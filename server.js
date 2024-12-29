@@ -2,9 +2,9 @@ const express = require("express");
 const app = express();
 const PORT = 3006;
 
-const alphabets = [
-  {
-    bigCall: [
+const alphabets = {
+  bigCharacters: {
+    bigChar: [
       "A",
       "B",
       "C",
@@ -33,8 +33,8 @@ const alphabets = [
       "Z",
     ],
   },
-  {
-    smallCall: [
+  smallCharacters: {
+    smallChar: [
       "a",
       "b",
       "c",
@@ -63,17 +63,18 @@ const alphabets = [
       "z",
     ],
   },
-];
+};
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 const specialSign = ["@", "#", "$", "*", "&", "_", "/", ".", "|", "?"];
 let password = null;
-const randomIndex = Math.floor(Math.random() * 10).toString();
+const randomIndex = Math.floor(Math.abs(Math.random() * 10)).toString();
+
 
 app.get("/api/test", async (req, res) => {
   res.send("ok");
   const main_generator = async (alphabet, numbers, specialSign) => {
-    let randomNumber = numbers[randomIndex]
-    let specialSign = specialSign[randomIndex]
+    let randomNumber = numbers[randomIndex];
+    let randomSpecialSign = specialSign[randomIndex];
   };
   main_generator(alphabets, numbers, specialSign);
 });
