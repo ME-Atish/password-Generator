@@ -78,3 +78,8 @@ const specialSign = [
   "|",
   "?",
 ];
+let password = null;
+  
+const main_generator = async (alphabet, numbers, specialSign) => {
+
+};
