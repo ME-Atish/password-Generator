@@ -74,6 +74,8 @@ const main_generator = async (alphabets, numbers, specialSign) => {
   let randomNumber = numbers[randomIndex];
   let randomSpecialSign = specialSign[randomIndex];
   let randomSmallAlphabets =
+    alphabets.smallCharacters.smallChar[randomIndexAlphabets];
+  let randomBigAlphabets =
     alphabets.bigCharacters.bigChar[randomIndexAlphabets];
 };
 main_generator(alphabets, numbers, specialSign);
