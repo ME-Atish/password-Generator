@@ -79,7 +79,9 @@ const specialSign = [
   "?",
 ];
 let password = null;
-  
-const main_generator = async (alphabet, numbers, specialSign) => {
 
+const main_generator = async (alphabet, numbers, specialSign) => {
+    let findIndex = numbers.findIndex((num) => {
+        num == randomNumber
+    })
 };
