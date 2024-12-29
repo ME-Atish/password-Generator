@@ -1,4 +1,4 @@
-const alphabet = [
+const alphabets = [
     {
       bigCall: [
         "A",
