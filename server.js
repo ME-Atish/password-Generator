@@ -68,7 +68,7 @@ const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 const specialSign = ["@", "#", "$", "*", "&", "_", "/", ".", "|", "?"];
 let password = null;
 const randomIndex = Math.floor(Math.abs(Math.random() * 10)).toString();
-
+const randomIndexAlphabets = Math.floor(Math.abs(Math.random() * 26));
 
 app.get("/api/test", async (req, res) => {
   res.send("ok");
