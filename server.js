@@ -65,32 +65,17 @@ const alphabets = [
   },
 ];
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
-const randomIndex = Math.floor(Math.random() * 10).toString();
-const specialSign = [
-  
-  "@",
-  "#",
-  "$",
-  
-  "*",
-  "&",
-  "_",
-  
-  "/",
-  ".",
-  "|",
-  "?",
-];
+const specialSign = ["@", "#", "$", "*", "&", "_", "/", ".", "|", "?"];
 let password = null;
+const randomIndex = Math.floor(Math.random() * 10).toString();
 
 app.get("/api/test", async (req, res) => {
   res.send("ok");
   const main_generator = async (alphabet, numbers, specialSign) => {
-    let findIndex_numbers = numbers.findIndex((num) => {
-      num == randomNumber;
-    });
+    let randomNumber = numbers[randomIndex]
+    
   };
-  main_generator(alphabets , numbers , specialSign)
+  main_generator(alphabets, numbers, specialSign);
 });
 
 app.listen(PORT || 3006, () => {
