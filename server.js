@@ -66,14 +66,15 @@ const alphabets = {
 };
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 const specialSign = ["@", "#", "$", "*", "&", "_", "/", ".", "|", "?"];
-let password = null;
-const randomIndex = Math.floor(Math.abs(Math.random() * 10)).toString();
-const randomIndexTwo = Math.floor(Math.abs(Math.random() * 5));
-const randomIndexAlphabets = Math.floor(Math.abs(Math.random() * 26));
-const randomIndexAlphabetsTwo = Math.floor(Math.abs(Math.random() * 13));
 
-let i = Math.floor(Math.abs(Math.random() * (14 - 8 + 1) + 8));
-const main_generator = async (alphabets, numbers, specialSign) => {
+const mainGenerator = async (alphabets, numbers, specialSign) => {
+  let password = null;
+  const randomIndex = Math.floor(Math.abs(Math.random() * 10)).toString();
+  const randomIndexTwo = Math.floor(Math.abs(Math.random() * 5));
+  const randomIndexAlphabets = Math.floor(Math.abs(Math.random() * 26));
+  const randomIndexAlphabetsTwo = Math.floor(Math.abs(Math.random() * 13));
+
+  let i = Math.floor(Math.abs(Math.random() * (14 - 8 + 1) + 8));
   for (i; i > 0; i--) {
     let randomNumber = numbers[randomIndex];
     let randomSpecialSign = specialSign[randomIndex];
@@ -97,11 +98,13 @@ const main_generator = async (alphabets, numbers, specialSign) => {
     password += randomNumber2;
     password += randomSmallAlphabets2;
   }
+  return password;
 };
-main_generator(alphabets, numbers, specialSign);
+mainGenerator(alphabets, numbers, specialSign);
 
-app.get("/passwordGenerator", (req, res) => {
-  res.send(password).status(200);
+app.get("/passwordGenerator", async (req, res) => {
+  password = await mainGenerator(alphabets, numbers, specialSign);
+  res.send(password)
 });
 
 app.listen(PORT || 3006, () => {
