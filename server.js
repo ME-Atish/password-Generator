@@ -68,10 +68,12 @@ const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 const specialSign = ["@", "#", "$", "*", "&", "_", "/", ".", "|", "?"];
 let password = null;
 const randomIndex = Math.floor(Math.abs(Math.random() * 10)).toString();
+const randomIndexTwo = Math.floor(Math.abs(Math.random() * 5));
 const randomIndexAlphabets = Math.floor(Math.abs(Math.random() * 26));
+const randomIndexAlphabetsTwo = Math.floor(Math.abs(Math.random() * 13));
 
 let i = Math.floor(Math.abs(Math.random() * (14 - 8 + 1) + 8));
-
+let j = i;
 const main_generator = async (alphabets, numbers, specialSign) => {
   for (i; i > 0; i--) {
     let randomNumber = numbers[randomIndex];
@@ -84,19 +86,18 @@ const main_generator = async (alphabets, numbers, specialSign) => {
     password += randomNumber;
     password += randomSpecialSign;
     password += randomSmallAlphabets;
-  }
 
-  let randomNumber = numbers[randomIndex];
-  let randomSpecialSign = specialSign[randomIndex];
-  let randomSmallAlphabets =
-    alphabets.smallCharacters.smallChar[randomIndexAlphabets];
-  let randomBigAlphabets =
-    alphabets.bigCharacters.bigChar[randomIndexAlphabets];
-  password +=
-    randomBigAlphabets +
-    randomNumber +
-    randomSmallAlphabets +
-    randomSpecialSign;
+    let randomNumber2 = numbers[randomIndexTwo];
+    let randomSpecialSign2 = specialSign[randomIndexTwo];
+    let randomSmallAlphabets2 =
+      alphabets.smallCharacters.smallChar[randomIndexAlphabetsTwo];
+    let randomBigAlphabets2 =
+      alphabets.bigCharacters.bigChar[randomIndexAlphabetsTwo];
+    password += randomSpecialSign2;
+    password += randomBigAlphabets2;
+    password += randomNumber2;
+    password += randomSmallAlphabets2;
+  }
 };
 main_generator(alphabets, numbers, specialSign);
 
