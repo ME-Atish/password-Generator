@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const PORT = 3006;
 
+const specialSign = [35, 36, 37, 38, 42, 46, 63, 64];
+
 const mainGenerator = async () => {
   const randomNumber = Math.floor(Math.random() * (14 - 8)) + 8;
   const exceptions = [
@@ -22,8 +24,8 @@ const mainGenerator = async () => {
   return password;
 };
 
-app.get("/passwordGenerator",  async (req, res) => {
-  password = await mainGenerator()
+app.get("/passwordGenerator", async (req, res) => {
+  password = await mainGenerator();
   res.send(password);
 });
 
