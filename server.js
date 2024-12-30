@@ -70,6 +70,8 @@ let password = null;
 const randomIndex = Math.floor(Math.abs(Math.random() * 10)).toString();
 const randomIndexAlphabets = Math.floor(Math.abs(Math.random() * 26));
 
+let i = Math.floor(Math.abs(Math.random() * (14 - 8 + 1) + 8 ))
+
 const main_generator = async (alphabets, numbers, specialSign) => {
   let randomNumber = numbers[randomIndex];
   let randomSpecialSign = specialSign[randomIndex];
