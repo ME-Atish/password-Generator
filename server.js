@@ -70,15 +70,33 @@ let password = null;
 const randomIndex = Math.floor(Math.abs(Math.random() * 10)).toString();
 const randomIndexAlphabets = Math.floor(Math.abs(Math.random() * 26));
 
-let i = Math.floor(Math.abs(Math.random() * (14 - 8 + 1) + 8 ))
+let i = Math.floor(Math.abs(Math.random() * (14 - 8 + 1) + 8));
 
 const main_generator = async (alphabets, numbers, specialSign) => {
+  for (i; i > 0; i--) {
+    let randomNumber = numbers[randomIndex];
+    let randomSpecialSign = specialSign[randomIndex];
+    let randomSmallAlphabets =
+      alphabets.smallCharacters.smallChar[randomIndexAlphabets];
+    let randomBigAlphabets =
+      alphabets.bigCharacters.bigChar[randomIndexAlphabets];
+    password = randomBigAlphabets;
+    password += randomNumber;
+    password += randomSpecialSign;
+    password += randomSmallAlphabets;
+  }
+
   let randomNumber = numbers[randomIndex];
   let randomSpecialSign = specialSign[randomIndex];
   let randomSmallAlphabets =
     alphabets.smallCharacters.smallChar[randomIndexAlphabets];
   let randomBigAlphabets =
     alphabets.bigCharacters.bigChar[randomIndexAlphabets];
+  password +=
+    randomBigAlphabets +
+    randomNumber +
+    randomSmallAlphabets +
+    randomSpecialSign;
 };
 main_generator(alphabets, numbers, specialSign);
 
