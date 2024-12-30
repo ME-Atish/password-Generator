@@ -4,6 +4,8 @@ const PORT = 3006;
 
 const specialSigns = [35, 36, 37, 38, 42, 46, 63, 64];
 const numbers = [48 , 49 , 50 ,51 , 52 , 53 , 54 , 55 , 56 , 57]
+const smallChars = [97 , 98 , 99 , 100 , 101 , 102 , 103 , 104 , 105 , 106 ,107 , 108 , 109 , 110 , 111 , 112 , 113 , 114 , 115 , 116 , 117 , 118 , 119 , 120 , 121 , 122]
+
 const mainGenerator = async () => {
   const randomNumber = Math.floor(Math.random() * (14 - 8)) + 8;
   const exceptions = [
