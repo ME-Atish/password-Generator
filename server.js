@@ -73,7 +73,6 @@ const randomIndexAlphabets = Math.floor(Math.abs(Math.random() * 26));
 const randomIndexAlphabetsTwo = Math.floor(Math.abs(Math.random() * 13));
 
 let i = Math.floor(Math.abs(Math.random() * (14 - 8 + 1) + 8));
-let j = i;
 const main_generator = async (alphabets, numbers, specialSign) => {
   for (i; i > 0; i--) {
     let randomNumber = numbers[randomIndex];
@@ -100,6 +99,10 @@ const main_generator = async (alphabets, numbers, specialSign) => {
   }
 };
 main_generator(alphabets, numbers, specialSign);
+
+app.get("/passwordGenerator", (req, res) => {
+  res.send(password).status(200);
+});
 
 app.listen(PORT || 3006, () => {
   console.log(`sample app running at port ${PORT}`);
