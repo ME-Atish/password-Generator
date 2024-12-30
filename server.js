@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 const PORT = 3006;
 
-const specialSign = [35, 36, 37, 38, 42, 46, 63, 64];
-
+const specialSigns = [35, 36, 37, 38, 42, 46, 63, 64];
+const numbers = [48 , 49 , 50 ,51 , 52 , 53 , 54 , 55 , 56 , 57]
 const mainGenerator = async () => {
   const randomNumber = Math.floor(Math.random() * (14 - 8)) + 8;
   const exceptions = [
