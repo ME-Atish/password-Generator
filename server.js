@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const PORT = 3006;
 
-const mainGenerator = async () => {
+const mainGenerator = async (bigChar, sign, smallChar, num) => {
   const randomNumber = Math.floor(Math.random() * (14 - 8)) + 8;
   const exceptions = [
     34, 39, 40, 41, 44, 43, 45, 47, 57, 58, 59, 60, 61, 62, 91, 92, 93, 94, 96,
@@ -17,13 +17,15 @@ const mainGenerator = async () => {
     65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83,
     84, 85, 86, 87, 88, 89, 90,
   ];
+  let signLength = specialSigns.length;
+  let numLength = bigChars.length;
+  let bigCharLength = numbers.length;
+  let smallCharLength = smallChars.length;
   const char = Array.from(
     { length: randomNumber }, // create array with random slot
     () => {
       let asciiCode;
-      do {
-        asciiCode = Math.floor(Math.random() * (122 - 35 + 1)) + 35; // create random ASCII code between 35 to 122
-      } while (exceptions.includes(asciiCode)); // exclude the exception number generated
+      do {} while (exceptions.includes(asciiCode)); // exclude the exception number generated
       return asciiCode;
     }
   );
@@ -32,12 +34,12 @@ const mainGenerator = async () => {
 };
 
 app.get("/passwordGenerator", async (req, res) => {
-  password = await mainGenerator();
   const bigChar = req.query.big;
   const smallChar = req.query.small;
   const num = req.query.num;
   const sign = req.query.sign;
   if (bigChar && sign && smallChar && num) {
+    password = await mainGenerator(bigChar, sign, smallChar, num);
   } else {
     res.send("Enter correct query string").status(400);
   }
