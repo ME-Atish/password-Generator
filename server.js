@@ -24,6 +24,10 @@ const mainGenerator = async () => {
 
 app.get("/passwordGenerator", async (req, res) => {
   password = await mainGenerator();
+  const bigChar = req.query.Big;
+  const smallChar = req.query.small;
+  const num = req.query.num;
+  const sign = req.query.sign;
   res.send(password);
 });
 
