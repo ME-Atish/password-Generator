@@ -17,10 +17,7 @@ const mainGenerator = async (bigChar, sign, smallChar, num) => {
     65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83,
     84, 85, 86, 87, 88, 89, 90,
   ];
-  let signLength = specialSigns.length;
-  let numLength = bigChars.length;
-  let bigCharLength = numbers.length;
-  let smallCharLength = smallChars.length;
+  let length = bigChar + sign + smallChar + num;
   const char = Array.from(
     { length: randomNumber }, // create array with random slot
     () => {
@@ -34,10 +31,10 @@ const mainGenerator = async (bigChar, sign, smallChar, num) => {
 };
 
 app.get("/passwordGenerator", async (req, res) => {
-  const bigChar = req.query.big;
-  const smallChar = req.query.small;
-  const num = req.query.num;
-  const sign = req.query.sign;
+  const bigChar = Number(req.query.big);
+  const smallChar = Number(req.query.small);
+  const num = Number(req.query.num);
+  const sign = Number(req.query.sign);
   if (bigChar && sign && smallChar && num) {
     password = await mainGenerator(bigChar, sign, smallChar, num);
   } else {
