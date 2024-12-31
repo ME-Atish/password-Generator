@@ -24,11 +24,16 @@ const mainGenerator = async () => {
 
 app.get("/passwordGenerator", async (req, res) => {
   password = await mainGenerator();
-  const bigChar = req.query.Big;
+  const bigChar = req.query.big;
   const smallChar = req.query.small;
   const num = req.query.num;
   const sign = req.query.sign;
-  res.send(password);
+  if(bigChar && sign && smallChar && num){
+
+  }else{
+    res.send("Enter correct query string")
+  }
+  // res.send(password);
 });
 
 app.listen(PORT || 3006, () => {
