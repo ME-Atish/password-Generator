@@ -28,10 +28,9 @@ app.get("/passwordGenerator", async (req, res) => {
   const smallChar = req.query.small;
   const num = req.query.num;
   const sign = req.query.sign;
-  if(bigChar && sign && smallChar && num){
-
-  }else{
-    res.send("Enter correct query string")
+  if (bigChar && sign && smallChar && num) {
+  } else {
+    res.send("Enter correct query string").status(400);
   }
   // res.send(password);
 });
