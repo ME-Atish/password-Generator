@@ -3,10 +3,10 @@ const app = express();
 const PORT = 3006;
 
 const mainGenerator = async () => {
-  const randomNumber = Math.floor(Math.random() * (14 - 8)) + 8;
-  const exceptions = [
-    34, 39, 40, 41, 44, 43, 45, 47, 57, 58, 59, 60, 61, 62, 91, 92, 93, 94, 96,
-  ];
+  // const randomNumber = Math.floor(Math.random() * (14 - 8)) + 8;
+
+  // Exclude special characters: :, ;, <, =, >, [, \, ], ^, `
+  const exceptions = [58, 59, 60, 61, 62, 91, 92, 93, 94, 96];
 
   const char = Array.from(
     { length: randomNumber }, // create array with random slot
@@ -22,8 +22,8 @@ const mainGenerator = async () => {
   return password;
 };
 
-app.get("/passwordGenerator",  async (req, res) => {
-  password = await mainGenerator()
+app.get("/passgen", async (req, res) => {
+  password = await mainGenerator();
   res.send(password);
 });
 
