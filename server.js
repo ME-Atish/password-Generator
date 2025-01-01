@@ -7,7 +7,9 @@ const mainGenerator = async (
   len,
   upperCharCount,
   lowerCharCount,
-  specialCharCount
+  specialCharCount,
+  salt,
+  pepper
 ) => {
   // Define character pools for each type
   const uppercase = [];
@@ -45,7 +47,7 @@ const mainGenerator = async (
     [result[i], result[j]] = [result[j], result[i]];
   }
 
-  return result.join("");
+  return salt + result.join("") + pepper;
 };
 
 app.get("/passgen", async (req, res) => {
@@ -54,6 +56,8 @@ app.get("/passgen", async (req, res) => {
   const upperCharCount = +req.query.uppers;
   const lowerCharCount = +req.query.lowers;
   const specialCharCount = +req.query.special;
+  const salt = req.query.salt ?? "";
+  const pepper = req.query.pepper ?? "";
 
   // if the requested length for password was below 8
   if (len < 8) {
@@ -63,11 +67,40 @@ app.get("/passgen", async (req, res) => {
     return;
   }
 
+  // check if the provided setting request for a longer response than the supposed length
+  if (upperCharCount + lowerCharCount + specialCharCount > len) {
+    res
+      .send(
+        "The provided setting requests for longer response than supposed length"
+      )
+      .status(401);
+    return;
+  }
+
+  // check if the overall length + salt/pepper aren't fit
+  if (
+    upperCharCount +
+      lowerCharCount +
+      specialCharCount +
+      salt.length +
+      pepper.length !=
+    len
+  ) {
+    res
+      .send(
+        "The overall length + salt/pepper aren't fit with each other—the salt/pepper are too long for your supposed length of password"
+      )
+      .status(401);
+    return;
+  }
+
   password = await mainGenerator(
     len,
     upperCharCount,
     lowerCharCount,
-    specialCharCount
+    specialCharCount,
+    salt,
+    pepper
   );
   res.send(password).status(200);
 });
