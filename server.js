@@ -17,14 +17,13 @@ const mainGenerator = async (bigChar, sign, smallChar, num) => {
     65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83,
     84, 85, 86, 87, 88, 89, 90,
   ];
-  let length = bigChar + num;
+  let length = bigChar;
   const char = Array.from(
     { length }, // create array with random slot
     () => {
       let asciiCode;
       do {
         asciiCode = Math.floor(Math.random() * (57 - 48 + 1)) + 48;
-        // asciiCode = Math.floor(Math.random() * (90 - 66 + 1)) + 66
       } while (exceptions.includes(asciiCode)); // exclude the exception number generated
       return asciiCode;
     }
@@ -44,7 +43,7 @@ app.get("/passwordGenerator", async (req, res) => {
   } else {
     res
       .send(
-        "<h1>Enter correct query string</h1><p>note : the structure of this query string : ?big=1&&num=2&&small=3&&sign=4</p>"
+        "<h1>Enter correct query string</h1> <p>note : correct structure = ?big=1&&num=2&&sign=3&small=4 </p>"
       )
       .status(400);
   }
