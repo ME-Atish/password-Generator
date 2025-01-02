@@ -55,6 +55,8 @@ const mainGenerator = async (
     [result[i], result[j]] = [result[j], result[i]];
   }
 
+  console.log(result.length);
+  console.log(result);
   return salt + result.join("") + pepper;
 };
 
@@ -113,7 +115,7 @@ app.get("/passgen", async (req, res) => {
     salt,
     pepper
   );
-  res.send(password).status(200);
+  res.json({ pass: password }).status(200);
 });
 
 app.listen(PORT || 3006, () => {
