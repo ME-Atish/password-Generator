@@ -55,8 +55,6 @@ const mainGenerator = async (
     [result[i], result[j]] = [result[j], result[i]];
   }
 
-  console.log(result.length);
-  console.log(result);
   return salt + result.join("") + pepper;
 };
 
