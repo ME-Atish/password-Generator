@@ -76,6 +76,14 @@ app.get("/passgen", async (req, res) => {
     return;
   }
 
+  // apply limit for requested passwords that are longer than 225 characters
+  if (len > 255) {
+    res
+      .send("We cannot produce passwords that are longer than 255 characters")
+      .status(401);
+    return;
+  }
+
   // check if the provided setting request for a longer response than the supposed length
   if (upperCharCount + lowerCharCount + specialCharCount + number > len) {
     res
