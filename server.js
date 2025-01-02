@@ -89,7 +89,7 @@ app.get("/passgen", async (req, res) => {
       lowerCharCount +
       specialCharCount +
       salt.length +
-      pepper.length !=
+      pepper.length >
     len
   ) {
     res
