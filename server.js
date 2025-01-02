@@ -68,6 +68,12 @@ app.get("/passgen", async (req, res) => {
   const salt = req.query.salt ?? "";
   const pepper = req.query.pepper ?? "";
 
+  // check if the requested length is not a number
+  if (len == NaN) {
+    res.send("Don't be a clown and type a real number 8<x<255").status(401);
+    return;
+  }
+
   // error if the requested length was below 8
   if (len < 8) {
     res
