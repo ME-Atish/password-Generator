@@ -40,10 +40,10 @@ http://localhost:3006/passgen?len=12&uppers=2&lowers=7&special=2
 
 We are going to do a lot of other fancy things, like:
 
-- [ ] making optional things, actually, optional! (they're not, yet:)))
+- [X] making optional things, actually, optional! (they're not, yet:)))
 - [ ] adding `numbers` to your phenomenal passwords.
 - [ ] including/excluding some characters you would to.
-- [ ] adding your supposed salt/pepper to your password.
+- [X] adding your supposed salt/pepper to your password.
 
 ## Contribution
 
