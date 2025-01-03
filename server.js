@@ -31,8 +31,9 @@ const mainGenerator = async (
     ...getRandomChar(special, specialCharCount),
     ...getRandomChar(numbers, numberCharCount),
   ];
-  for (let i = 33; i <= 122; i++) {
-    exclude.push(String.fromCharCode(excludeCharCount));
+
+  for (let i = 0; i < excludeCharCount.length; i++) {
+    excludeCharCount.charCodeAt(i);
   }
   // If length allows, fill the rest with random characters (numbers, etc.)
   const remainingLength = len - result.length;
