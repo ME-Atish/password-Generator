@@ -19,14 +19,16 @@ const mainGenerator = async (
   const special = [];
   const numbers = [];
   const exclude = [];
-  for (let i = 65; i <= 90; i++) uppercase.push(String.fromCharCode(i)); // A-Z
+  for (let i = 0; i < excludeCharCount.length; i++)
+    exclude.push(excludeCharCount.charCodeAt(i));
+  for (let i = 65; i <= 90; i++) {
+    uppercase.push(String.fromCharCode(i));
+  } // A-Z
   for (let i = 97; i <= 122; i++) lowercase.push(String.fromCharCode(i)); // a-z
   for (let i = 48; i <= 57; i++) numbers.push(String.fromCharCode(i)); // number between 0-9
   for (let i = 33; i <= 47; i++) special.push(String.fromCharCode(i)); // Special chars before 0-9
   for (let i = 58; i <= 64; i++) special.push(String.fromCharCode(i)); // Special chars between digits and A-Z
   for (let i = 91; i <= 96; i++) special.push(String.fromCharCode(i)); // Special chars between Z and a
-  for (let i = 0; i < excludeCharCount.length; i++)
-    excludeCharCount.charCodeAt(i);
 
   const result = [
     ...getRandomChar(uppercase, upperCharCount),
@@ -35,6 +37,21 @@ const mainGenerator = async (
     ...getRandomChar(numbers, numberCharCount),
   ];
 
+  const filterUpperCase = uppercase.filter((letter) => {
+    !exclude.includes(letter.charCodeAt(0));
+  });
+
+  const filterLowerCase = lowercase.filter((letter) => {
+    !exclude.includes(letter.charCodeAt(0));
+  });
+
+  const filterSpecialChar = special.filter((letter) => {
+    !exclude.includes(letter.charCodeAt(0));
+  });
+
+  const filterNumber = numbers.filter((num) => {
+    !exclude.includes(num.charCodeAt(0));
+  });
   // If length allows, fill the rest with random characters (numbers, etc.)
   const remainingLength = len - result.length;
   if (remainingLength > 0) {
@@ -44,7 +61,6 @@ const mainGenerator = async (
     if (!lowerCharCount) possibleRangeForRemaining.push(...lowercase);
     if (!specialCharCount) possibleRangeForRemaining.push(...special);
     if (!numberCharCount) possibleRangeForRemaining.push(...numbers);
-    if (!excludeCharCount) possibleRangeForRemaining.pop(...exclude);
     result.push(
       ...getRandomChar(
         // [...uppercase, ...lowercase, ...special],
