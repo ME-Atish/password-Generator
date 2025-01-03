@@ -60,11 +60,11 @@ const mainGenerator = async (
 
 app.get("/passgen", async (req, res) => {
   // decoding the query strings
-  const len = +req.query.len || 0;
+  const len = +req.query.len;
   const upperCharCount = +req.query.uppers || 0;
   const lowerCharCount = +req.query.lowers || 0;
   const specialCharCount = +req.query.special || 0;
-  const number = +req.query.number || 0;
+  const numberCharCount = +req.query.number || 0;
   const salt = req.query.salt ?? "";
   const pepper = req.query.pepper ?? "";
 
@@ -72,14 +72,6 @@ app.get("/passgen", async (req, res) => {
   if (len < 8) {
     res
       .send("The length of password couldn't be less than 8 characters")
-      .status(401);
-    return;
-  }
-
-  // apply limit for requested passwords that are longer than 225 characters
-  if (len > 255) {
-    res
-      .send("We cannot produce passwords that are longer than 255 characters")
       .status(401);
     return;
   }
@@ -99,7 +91,7 @@ app.get("/passgen", async (req, res) => {
     upperCharCount +
       lowerCharCount +
       specialCharCount +
-      number +
+      numberCharCount +
       salt.length +
       pepper.length >
     len
