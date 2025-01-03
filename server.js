@@ -9,6 +9,7 @@ const mainGenerator = async (
   lowerCharCount,
   specialCharCount,
   numberCharCount,
+  excludeCharCount,
   salt,
   pepper
 ) => {
@@ -17,20 +18,21 @@ const mainGenerator = async (
   const lowercase = [];
   const special = [];
   const numbers = [];
+  const exclude = [];
   for (let i = 65; i <= 90; i++) uppercase.push(String.fromCharCode(i)); // A-Z
   for (let i = 97; i <= 122; i++) lowercase.push(String.fromCharCode(i)); // a-z
-  for (let i = 48; i <= 57; i++) numbers.push(String.fromCharCode(i));
+  for (let i = 48; i <= 57; i++) numbers.push(String.fromCharCode(i)); // number between 0-9
   for (let i = 33; i <= 47; i++) special.push(String.fromCharCode(i)); // Special chars before 0-9
   for (let i = 58; i <= 64; i++) special.push(String.fromCharCode(i)); // Special chars between digits and A-Z
   for (let i = 91; i <= 96; i++) special.push(String.fromCharCode(i)); // Special chars between Z and a
-
   const result = [
     ...getRandomChar(uppercase, upperCharCount),
     ...getRandomChar(lowercase, lowerCharCount),
     ...getRandomChar(special, specialCharCount),
     ...getRandomChar(numbers, numberCharCount),
   ];
-
+  for (let i = 33; i <= 122; i++) exclude.push(excludeCharCount);
+  result.pop(...exclude)
   // If length allows, fill the rest with random characters (numbers, etc.)
   const remainingLength = len - result.length;
   if (remainingLength > 0) {
@@ -65,6 +67,7 @@ app.get("/passgen", async (req, res) => {
   const lowerCharCount = +req.query.lowers || 0;
   const specialCharCount = +req.query.special || 0;
   const numberCharCount = +req.query.number || 0;
+  const excludeCharCount = req.query.exl || 0;
   const salt = req.query.salt ?? "";
   const pepper = req.query.pepper ?? "";
 
@@ -77,7 +80,10 @@ app.get("/passgen", async (req, res) => {
   }
 
   // check if the provided setting request for a longer response than the supposed length
-  if (upperCharCount + lowerCharCount + specialCharCount + number > len) {
+  if (
+    upperCharCount + lowerCharCount + specialCharCount + numberCharCount >
+    len
+  ) {
     res
       .send(
         "The provided setting requests for longer response than supposed length"
@@ -109,7 +115,7 @@ app.get("/passgen", async (req, res) => {
     upperCharCount,
     lowerCharCount,
     specialCharCount,
-    number,
+    numberCharCount,
     salt,
     pepper
   );
