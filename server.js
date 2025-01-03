@@ -25,6 +25,9 @@ const mainGenerator = async (
   for (let i = 33; i <= 47; i++) special.push(String.fromCharCode(i)); // Special chars before 0-9
   for (let i = 58; i <= 64; i++) special.push(String.fromCharCode(i)); // Special chars between digits and A-Z
   for (let i = 91; i <= 96; i++) special.push(String.fromCharCode(i)); // Special chars between Z and a
+  for (let i = 0; i < excludeCharCount.length; i++)
+    excludeCharCount.charCodeAt(i);
+
   const result = [
     ...getRandomChar(uppercase, upperCharCount),
     ...getRandomChar(lowercase, lowerCharCount),
@@ -32,9 +35,6 @@ const mainGenerator = async (
     ...getRandomChar(numbers, numberCharCount),
   ];
 
-  for (let i = 0; i < excludeCharCount.length; i++) {
-    excludeCharCount.charCodeAt(i);
-  }
   // If length allows, fill the rest with random characters (numbers, etc.)
   const remainingLength = len - result.length;
   if (remainingLength > 0) {
