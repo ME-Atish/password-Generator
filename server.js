@@ -19,28 +19,28 @@ const mainGenerator = async (
   const special = [];
   const numbers = [];
   const exclude = [];
-  for (let i = 0; i < excludeCharCount.length; i++)
+  for (let i = 0; i < excludeCharCount.length; i++) {
     exclude.push(excludeCharCount.charCodeAt(i));
-  for (let i = 65; i <= 90; i++) {
-    uppercase.push(String.fromCharCode(i));
-  } // A-Z
+  }
+
+  for (let i = 65; i <= 90; i++) uppercase.push(String.fromCharCode(i));
+  // A-Z
   for (let i = 97; i <= 122; i++) lowercase.push(String.fromCharCode(i)); // a-z
   for (let i = 48; i <= 57; i++) numbers.push(String.fromCharCode(i)); // number between 0-9
   for (let i = 33; i <= 47; i++) special.push(String.fromCharCode(i)); // Special chars before 0-9
   for (let i = 58; i <= 64; i++) special.push(String.fromCharCode(i)); // Special chars between digits and A-Z
   for (let i = 91; i <= 96; i++) special.push(String.fromCharCode(i)); // Special chars between Z and a
 
-  const result = [
-    ...getRandomChar(uppercase, upperCharCount),
-    ...getRandomChar(lowercase, lowerCharCount),
-    ...getRandomChar(special, specialCharCount),
-    ...getRandomChar(numbers, numberCharCount),
-  ];
-
   const filterUpperCase = uppercase.filter((letter) => {
-    !exclude.includes(letter.charCodeAt(0));
+    String.fromCharCode(
+      exclude.forEach((exl) => {
+        if (!exclude.includes(letter)) {
+          return letter;
+        }
+        return exl;
+      })
+    );
   });
-
   const filterLowerCase = lowercase.filter((letter) => {
     !exclude.includes(letter.charCodeAt(0));
   });
@@ -49,18 +49,27 @@ const mainGenerator = async (
     !exclude.includes(letter.charCodeAt(0));
   });
 
-  const filterNumber = numbers.filter((num) => {
-    !exclude.includes(num.charCodeAt(0));
+  const filteredNumbers = numbers.filter((char) => {
+    if (!exclude.includes(char)) {
+      return char;
+    }
   });
+  const result = [
+    ...getRandomChar(filterUpperCase, upperCharCount),
+    ...getRandomChar(filterLowerCase, lowerCharCount),
+    ...getRandomChar(filterSpecialChar, specialCharCount),
+    ...getRandomChar(filteredNumbers, numberCharCount),
+  ];
+
   // If length allows, fill the rest with random characters (numbers, etc.)
   const remainingLength = len - result.length;
   if (remainingLength > 0) {
     // define the possible range for remaining length, with no conflict with user's settings
     const possibleRangeForRemaining = [];
-    if (!upperCharCount) possibleRangeForRemaining.push(...uppercase);
+    if (!upperCharCount) possibleRangeForRemaining.push(...filterUpperCase);
     if (!lowerCharCount) possibleRangeForRemaining.push(...lowercase);
     if (!specialCharCount) possibleRangeForRemaining.push(...special);
-    if (!numberCharCount) possibleRangeForRemaining.push(...numbers);
+    if (!numberCharCount) possibleRangeForRemaining.push(...filteredNumbers);
     result.push(
       ...getRandomChar(
         // [...uppercase, ...lowercase, ...special],
