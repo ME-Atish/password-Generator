@@ -31,8 +31,9 @@ const mainGenerator = async (
     ...getRandomChar(special, specialCharCount),
     ...getRandomChar(numbers, numberCharCount),
   ];
-  for (let i = 33; i <= 122; i++) exclude.push(excludeCharCount);
-  result.pop(...exclude)
+  for (let i = 33; i <= 122; i++) {
+    exclude.push(String.fromCharCode(excludeCharCount));
+  }
   // If length allows, fill the rest with random characters (numbers, etc.)
   const remainingLength = len - result.length;
   if (remainingLength > 0) {
@@ -42,6 +43,7 @@ const mainGenerator = async (
     if (!lowerCharCount) possibleRangeForRemaining.push(...lowercase);
     if (!specialCharCount) possibleRangeForRemaining.push(...special);
     if (!numberCharCount) possibleRangeForRemaining.push(...numbers);
+    if (!excludeCharCount) possibleRangeForRemaining.pop(...exclude);
     result.push(
       ...getRandomChar(
         // [...uppercase, ...lowercase, ...special],
@@ -116,6 +118,7 @@ app.get("/passgen", async (req, res) => {
     lowerCharCount,
     specialCharCount,
     numberCharCount,
+    excludeCharCount,
     salt,
     pepper
   );
