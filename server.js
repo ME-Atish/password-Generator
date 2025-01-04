@@ -9,55 +9,69 @@ const mainGenerator = async (
   lowerCharCount,
   specialCharCount,
   numberCharCount,
-  excludeCharCount,
+  excludeChars,
   salt,
   pepper
 ) => {
   // Define character pools for each type
   const uppercase = [];
   const lowercase = [];
-  const special = [];
+  const specials = [];
   const numbers = [];
-  const exclude = [];
-  for (let i = 0; i < excludeCharCount.length; i++) {
-    exclude.push(excludeCharCount.charCodeAt(i));
+  const exclude = {
+    uppers: [],
+    lowers: [],
+    specials: [],
+    numbers: [],
+  };
+  for (let i = 0; i < excludeChars.length; i++) {
+    // ascii code of exclude
+    if (excludeChars.charCodeAt(i) <= 90 && excludeChars.charCodeAt(i) >= 65) {
+      exclude.uppers.push(excludeChars[i]);
+    } else if (
+      excludeChars.charCodeAt(i) >= 97 &&
+      excludeChars.charCodeAt(i) <= 122
+    ) {
+      exclude.lowers.push(excludeChars[i]);
+    } else if (
+      (excludeChars.charCodeAt(i) <= 47 && excludeChars.charCodeAt(i) >= 33) ||
+      (excludeChars.charCodeAt(i) <= 64 && excludeChars.charCodeAt(i) >= 58) ||
+      (excludeChars.charCodeAt(i) <= 96 && excludeChars.charCodeAt(i) >= 91)
+    ) {
+      exclude.specials.push(excludeChars[i]);
+    } else if (
+      excludeChars.charCodeAt(i) <= 57 &&
+      excludeChars.charCodeAt(i) >= 48
+    ) {
+      exclude.numbers.push(excludeChars[i]);
+    }
   }
 
   for (let i = 65; i <= 90; i++) uppercase.push(String.fromCharCode(i));
   // A-Z
   for (let i = 97; i <= 122; i++) lowercase.push(String.fromCharCode(i)); // a-z
   for (let i = 48; i <= 57; i++) numbers.push(String.fromCharCode(i)); // number between 0-9
-  for (let i = 33; i <= 47; i++) special.push(String.fromCharCode(i)); // Special chars before 0-9
-  for (let i = 58; i <= 64; i++) special.push(String.fromCharCode(i)); // Special chars between digits and A-Z
-  for (let i = 91; i <= 96; i++) special.push(String.fromCharCode(i)); // Special chars between Z and a
+  for (let i = 33; i <= 47; i++) specials.push(String.fromCharCode(i)); // Special chars before 0-9
+  for (let i = 58; i <= 64; i++) specials.push(String.fromCharCode(i)); // Special chars between digits and A-Z
+  for (let i = 91; i <= 96; i++) specials.push(String.fromCharCode(i)); // Special chars between Z and a
 
-  const filterUpperCase = uppercase.filter((letter) => {
-    String.fromCharCode(
-      exclude.forEach((exl) => {
-        if (!exclude.includes(letter)) {
-          return letter;
-        }
-        return exl;
-      })
-    );
-  });
-  const filterLowerCase = lowercase.filter((letter) => {
-    !exclude.includes(letter.charCodeAt(0));
-  });
+  const filteredUppercase = uppercase.filter(
+    (char) => !exclude.uppers.includes(char)
+  );
+  const filteredLowercase = lowercase.filter(
+    (char) => !exclude.lowers.includes(char)
+  );
+  const filteredSpecialChars = specials.filter(
+    (char) => !exclude.specials.includes(char)
+  );
+  const filteredNumbers = numbers.filter(
+    (char) => !exclude.numbers.includes(char)
+  );
 
-  const filterSpecialChar = special.filter((letter) => {
-    !exclude.includes(letter.charCodeAt(0));
-  });
-
-  const filteredNumbers = numbers.filter((char) => {
-    if (!exclude.includes(char)) {
-      return char;
-    }
-  });
   const result = [
-    ...getRandomChar(filterUpperCase, upperCharCount),
-    ...getRandomChar(filterLowerCase, lowerCharCount),
-    ...getRandomChar(filterSpecialChar, specialCharCount),
+    ...getRandomChar(filteredUppercase, upperCharCount),
+    ...getRandomChar(filteredLowercase, lowerCharCount),
+    ...getRandomChar(filteredSpecialChars, specialCharCount),
     ...getRandomChar(filteredNumbers, numberCharCount),
   ];
 
@@ -66,17 +80,12 @@ const mainGenerator = async (
   if (remainingLength > 0) {
     // define the possible range for remaining length, with no conflict with user's settings
     const possibleRangeForRemaining = [];
-    if (!upperCharCount) possibleRangeForRemaining.push(...filterUpperCase);
-    if (!lowerCharCount) possibleRangeForRemaining.push(...lowercase);
-    if (!specialCharCount) possibleRangeForRemaining.push(...special);
+    if (!upperCharCount) possibleRangeForRemaining.push(...filteredUppercase);
+    if (!lowerCharCount) possibleRangeForRemaining.push(...filteredLowercase);
+    if (!specialCharCount)
+      possibleRangeForRemaining.push(...filteredSpecialChars);
     if (!numberCharCount) possibleRangeForRemaining.push(...filteredNumbers);
-    result.push(
-      ...getRandomChar(
-        // [...uppercase, ...lowercase, ...special],
-        possibleRangeForRemaining,
-        remainingLength
-      )
-    );
+    result.push(...getRandomChar(possibleRangeForRemaining, remainingLength));
   }
 
   // Shuffle the result array
@@ -95,7 +104,7 @@ app.get("/passgen", async (req, res) => {
   const lowerCharCount = +req.query.lowers || 0;
   const specialCharCount = +req.query.special || 0;
   const numberCharCount = +req.query.number || 0;
-  const excludeCharCount = req.query.exl || 0;
+  const excludeChars = req.query.exl || "";
   const salt = req.query.salt ?? "";
   const pepper = req.query.pepper ?? "";
 
@@ -144,7 +153,7 @@ app.get("/passgen", async (req, res) => {
     lowerCharCount,
     specialCharCount,
     numberCharCount,
-    excludeCharCount,
+    excludeChars,
     salt,
     pepper
   );
