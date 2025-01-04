@@ -24,28 +24,6 @@ const mainGenerator = async (
     specials: [],
     numbers: [],
   };
-  for (let i = 0; i < excludeChars.length; i++) {
-    // ascii code of exclude
-    if (excludeChars.charCodeAt(i) <= 90 && excludeChars.charCodeAt(i) >= 65) {
-      exclude.uppers.push(excludeChars[i]);
-    } else if (
-      excludeChars.charCodeAt(i) >= 97 &&
-      excludeChars.charCodeAt(i) <= 122
-    ) {
-      exclude.lowers.push(excludeChars[i]);
-    } else if (
-      (excludeChars.charCodeAt(i) <= 47 && excludeChars.charCodeAt(i) >= 33) ||
-      (excludeChars.charCodeAt(i) <= 64 && excludeChars.charCodeAt(i) >= 58) ||
-      (excludeChars.charCodeAt(i) <= 96 && excludeChars.charCodeAt(i) >= 91)
-    ) {
-      exclude.specials.push(excludeChars[i]);
-    } else if (
-      excludeChars.charCodeAt(i) <= 57 &&
-      excludeChars.charCodeAt(i) >= 48
-    ) {
-      exclude.numbers.push(excludeChars[i]);
-    }
-  }
 
   for (let i = 65; i <= 90; i++) uppercase.push(String.fromCharCode(i));
   // A-Z
@@ -55,6 +33,42 @@ const mainGenerator = async (
   for (let i = 58; i <= 64; i++) specials.push(String.fromCharCode(i)); // Special chars between digits and A-Z
   for (let i = 91; i <= 96; i++) specials.push(String.fromCharCode(i)); // Special chars between Z and a
 
+  // Categorize and add excluded characters
+  for (let i = 0; i < excludeChars.length; i++) {
+    if (
+      excludeChars.charCodeAt(i) <= 90 &&
+      excludeChars.charCodeAt(i) >= 65 &&
+      !exclude.uppers.includes(excludeChars[i])
+    ) {
+      exclude.uppers.push(excludeChars[i]);
+    } else if (
+      excludeChars.charCodeAt(i) >= 97 &&
+      excludeChars.charCodeAt(i) <= 122 &&
+      !exclude.lowers.includes(excludeChars[i])
+    ) {
+      exclude.lowers.push(excludeChars[i]);
+    } else if (
+      (excludeChars.charCodeAt(i) <= 47 &&
+        excludeChars.charCodeAt(i) >= 33 &&
+        !exclude.specials.includes(excludeChars[i])) ||
+      (excludeChars.charCodeAt(i) <= 64 &&
+        excludeChars.charCodeAt(i) >= 58 &&
+        !exclude.specials.includes(excludeChars[i])) ||
+      (excludeChars.charCodeAt(i) <= 96 &&
+        excludeChars.charCodeAt(i) >= 91 &&
+        !exclude.specials.includes(excludeChars[i]))
+    ) {
+      exclude.specials.push(excludeChars[i]);
+    } else if (
+      excludeChars.charCodeAt(i) <= 57 &&
+      excludeChars.charCodeAt(i) >= 48 &&
+      !exclude.numbers.includes(excludeChars[i])
+    ) {
+      exclude.numbers.push(excludeChars[i]);
+    }
+  }
+
+  // Redefine and filter pools
   const filteredUppercase = uppercase.filter(
     (char) => !exclude.uppers.includes(char)
   );
@@ -68,6 +82,7 @@ const mainGenerator = async (
     (char) => !exclude.numbers.includes(char)
   );
 
+  // Generate a result
   const result = [
     ...getRandomChar(filteredUppercase, upperCharCount),
     ...getRandomChar(filteredLowercase, lowerCharCount),
