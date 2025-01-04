@@ -43,7 +43,7 @@ We are going to do a lot of other fancy things, like:
 
 - [X] making optional things, actually, optional! (they're not, yet:)))
 - [X] adding `numbers` to your phenomenal passwords.
-- [ ] including/excluding some characters you would to.
+- [X] excluding some characters you would to.
 - [X] adding your supposed salt/pepper to your password.
 
 ## Contribution
