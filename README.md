@@ -30,6 +30,7 @@ Our wonderful project has several options for you, so you should never be worrie
 - `special` (optional): want some fancy special characters like !, @, #, etc.? Just tell us how many of them will satisfy you.
 - `salt` (optional): add something at the beginning of your password.
 - `pepper` (optional): add something followed by your password.
+- `exl` (optional): specify some characters to be excluded. _**Please note that you cannot exclude the sharp (#) character, due to URL structures**_
 
 For instance:
 
