@@ -31,6 +31,7 @@ app.get(
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.status(400).json({ errors: errors.array() });
+      return;
     }
 
     // error if the requested length was below 8
